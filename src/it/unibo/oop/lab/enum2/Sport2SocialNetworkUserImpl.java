@@ -3,6 +3,9 @@
  */
 package it.unibo.oop.lab.enum2;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
 import it.unibo.oop.lab.socialnetwork.User;
 
@@ -30,6 +33,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * 
      * add a field to keep track of the set of sports followed/done by a user
      */
+	private Set<Sport> list;
 
     /**
      * Builds a new {@link Sport2SocialNetworkUserImpl}.
@@ -44,6 +48,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      */
     public Sport2SocialNetworkUserImpl(final String name, final String surname, final String user) {
         this(name, surname, user, -1);
+        list = new HashSet<>();
     }
 
     /**
@@ -61,6 +66,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      */
     public Sport2SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        list = new HashSet<>();
     }
 
     /*
@@ -75,7 +81,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      *            a sport followed/done by the user
      */
     public void addSport(final Sport sport) {
-
+    	this.list.add(sport);
     }
 
     /**
@@ -87,7 +93,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * @return true if user likes sport s
      */
     public boolean likesSport(final Sport s) {
-        return false;
+        return this.list.contains(s);
     }
 
     /*
@@ -114,4 +120,23 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
     /*
      * public Set<Sport> getSportPracticedInPlace(Place p) { return null; }
      */
+    public Set<Sport> getIndividualSports() { 
+    	Set<Sport> list2 = new HashSet();
+    	this.list.forEach((sport)->{
+    		if(sport.isIndividualSport()) {
+    			list2.add(sport);
+    		}
+    	});
+    	return list2; 
+    }
+    public Set<Sport> getSportPracticedInPlace(Place p) { 
+    	Set<Sport> list2 = new HashSet();
+    	this.list.forEach((sport)->{
+    		if(sport.getPlace().equals(p)) {
+    			list2.add(sport);
+    		}
+    	});
+    	return list2; 
+    }
+    
 }
